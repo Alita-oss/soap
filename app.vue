@@ -1,40 +1,40 @@
 <template>
-  <div class="layout">
-    Hi 
-    <p class="hello">Hello</p>
-    <h2 class="random">hesixdfgdj</h2>
-  </div>
+    <div class="layout">
+        Hi
+        <p class="hello">Hello</p>
+        <h2 class="random">hesixdfgdj</h2>
+    </div>
 </template>
 
 <script setup lang="ts">
-  onMounted(async () => {
+onMounted(async () => {
     const res = await fetch('/api/recipe', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     });
 
     const data = await res.json();
-    console.log('Response:', data); 
-  });
+    console.log('Response:', data);
+});
 </script>
 
 <style scoped lang="scss">
-  .layout {
+.layout {
     max-width: 1200px;
     margin: 0 auto;
-  }
+}
 
-  .hello {
-    @include typography.font(body, xl)
-  }
+.hello {
+    @include typography.font(body, xl);
+}
 
-  .random {
+.random {
     color: lightblue;
 
     @include functions.device(tablet) {
-      color: pink;
+        color: pink;
     }
-  }
+}
 </style>

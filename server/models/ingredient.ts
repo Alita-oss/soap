@@ -1,21 +1,20 @@
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose';
 import type { Ingredient as IngredientType } from '~/types/ingredient';
 
-export const Ingredient = defineMongooseModel<IngredientType>({
-  name: 'Ingredient',
-  schema: {
+const ingredientSchema = new Schema<IngredientType>({
     name: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     unit: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     category: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     description: String,
-  },
 });
+
+export const Ingredient = model<IngredientType>('Ingredient', ingredientSchema);
