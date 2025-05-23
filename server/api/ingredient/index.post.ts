@@ -1,16 +1,12 @@
-import { Ingredient } from "~/server/models/ingredient";
-import { ErrorPrefix } from "~/types/error";
-import status from "http-status";
+import { Ingredient } from '~/server/models/ingredient';
+import { ErrorPrefix } from '~/types/error';
 
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
 
         if (!body.name || !body.unit || !body.category) {
-            throw createError({
-                message: `${ErrorPrefix.API} Missing required fields: name, unit or category`,
-                statusCode: status.BAD_REQUEST,
-            });
+            throw new Error('Missing required fields: name, unit or category');
         }
 
         const existingIngredient = await Ingredient.findOne({
@@ -18,22 +14,12 @@ export default defineEventHandler(async (event) => {
         });
 
         if (existingIngredient) {
-            throw createError({
-                message: `${ErrorPrefix.API} Ingredient with this name already exists`,
-                statusCode: status.CONFLICT,
-            });
+            throw new Error('Ingredient with this name already exists');
         }
 
         const newIngredient = await Ingredient.create(body);
         return newIngredient;
-        
-    } catch (err){
-        throw createError({
-            message: `${ErrorPrefix.API} Error creating new ingredient`,
-            statusCode: status.INTERNAL_SERVER_ERROR,
-            data: {
-                rawError: err,
-            },
-        });
-    };
+    } catch (err) {
+        handleCatchError(`${ErrorPrefix.API} Error creating new ingredient`, err);
+    }
 });

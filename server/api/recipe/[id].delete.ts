@@ -1,38 +1,18 @@
-import {Recipe} from '~/server/models/recipe';
+import { Recipe } from '~/server/models/recipe';
 import { ErrorPrefix } from '~/types/error';
-import status from "http-status";
+import status from 'http-status';
+import { checkParam, handleCatchError } from '~/server/utils/api';
 
 export default defineEventHandler(async (event) => {
     try {
-        const id = event.context.params?.id;
-        if (!id) {
-            throw createError({
-                message: `${ErrorPrefix.API} Missing recipe id`,
-                statusCode: status.BAD_REQUEST,
-            });
-        } 
+        const id = checkParam(event, 'id');
 
-        const deleted = await Recipe.findByIdAndDelete(id);
-
-        if (!deleted) {
-            throw createError({
-                message: `${ErrorPrefix.API} Recipe not found`,
-                statusCode: status.NOT_FOUND,
-            });
-        }
+        await Recipe.findByIdAndDelete(id);
 
         return {
-            message: "Recipe successfully deleted",
-            recipe: deleted,
+            statusCode: status.OK,
         };
-
     } catch (err) {
-        throw createError({
-            message: `${ErrorPrefix.API} Error deleting recipe.`,
-            statusCode: status.INTERNAL_SERVER_ERROR,
-            data: { 
-                rawError: err 
-            },
-        });
-    };
+        handleCatchError(`${ErrorPrefix.API} Error deleting recipe`, err);
+    }
 });
