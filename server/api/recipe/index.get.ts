@@ -1,10 +1,11 @@
-import {Recipe} from '~/server/models/recipe';
+import { Recipe } from '~/server/models/recipe';
+import { ErrorPrefix } from '~/types/error';
 
 export default defineEventHandler(async () => {
-const recipes = await Recipe.find(); 
-    
-    return {
-        success: true,
-        recipes
-    };
+    try {
+        const recipes = await Recipe.find().populate('ingredients.ingredient');
+        return recipes;
+    } catch (err) {
+        handleCatchError(`${ErrorPrefix.API} Failed to get all recipes`, err);
+    }
 });
