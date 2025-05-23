@@ -1,8 +1,17 @@
 <template>
     <div class="layout">
-        Hi
         <p class="hello">Hello</p>
         <h2 class="random">hesixdfgdj</h2>
+        <!-- <div class="test">
+            <SInput :error="error">
+                <template #label>
+                    <span>Label</span>
+                </template>
+                <template #message>
+                    <span>Message asldkfj jkdsflk jdklfj dkslj</span>
+                </template>
+            </SInput>
+        </div> -->
     </div>
 </template>
 
