@@ -1,24 +1,25 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
-  devtools: { enabled: true },
-  css: ['@/assets/styles/main.scss'],
-  modules: ['@nuxt/eslint', '@nuxt/test-utils', 'nuxt-mongoose'],
+    modules: ['@nuxt/eslint', '@nuxt/test-utils'],
 
-  runtimeConfig: {
-    MONGODB_CONNECTION: ''
-  },
+    css: ['@/assets/styles/main.scss'],
 
-  vite: {
+    vite: {
         css: {
             preprocessorOptions: {
                 scss: {
                     additionalData: `
-                        @use "@/assets/styles/functions.scss";
-                        @use "@/assets/styles/typography.scss";
+                    @use "@/assets/styles/functions.scss";
+                    @use "@/assets/styles/typography.scss";
                     `,
                 },
             },
         },
     },
+
+    runtimeConfig: {
+        MONGODB_URI: '',
+    },
+
+    compatibilityDate: '2025-05-15',
 });
