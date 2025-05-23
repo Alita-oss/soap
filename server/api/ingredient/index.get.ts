@@ -15,5 +15,5 @@ export default defineEventHandler(async () => {
                 rawError: err 
             },
         });
-  };
+    };
 });

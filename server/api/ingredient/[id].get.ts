@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
         if (!id) {
             throw createError({
-                message: `${ErrorPrefix.API} This id does not exist`,
+                message: `${ErrorPrefix.API} Missing ingredient id`,
                 statusCode: status.BAD_REQUEST,
             });
         }
