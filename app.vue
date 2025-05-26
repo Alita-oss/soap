@@ -15,13 +15,12 @@ onMounted(async () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: {
+        body: JSON.stringify({
             name: 'hej'
-        }
+        }),
     });
 
-    const data = await res.json();
-    console.log('Response:', data);*/
+    console.log('Response:', await res.json());*/
 });
 </script>
 
