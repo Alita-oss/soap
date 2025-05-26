@@ -1,45 +1,37 @@
 <template>
-    <button :disabled="disabled" :class="['s-button', { 's-button--disabled': disabled }]">
+    <button class="s-button">
         <slot />
     </button>
 </template>
 
-<script setup lang="ts">
-withDefaults(
-    defineProps<{
-        disabled?: boolean;
-    }>(),
-    {
-        disabled: false,
-    },
-);
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .s-button {
-    padding: 0.5rem 1.5rem;
     border-radius: 20px;
     border: 1px solid #000;
-    background-color: #fff;
-    color: #000;
     cursor: pointer;
-    width: 15%;
+    width: 100%;
+    padding: 0.5rem 1.5rem;
 
-    @include typography.font(body, s);
+    @include typography.font(body, m);
 
     &:hover {
-        background-color: #000;
-        color: #fff;
+        background-color: var(--color-btn-bg-hover);
     }
 
-    &--disabled {
-        background-color: #f0f0f0;
+    &:active {
+        background-color: var(--color-btn-bg-active);
+    }
+
+    &:disabled {
+        background-color: var(--color-btn-bg-disabled);
         color: #aaa;
         border-color: #ccc;
         cursor: not-allowed;
 
         &:hover {
-            background-color: #f0f0f0;
+            background-color: var(--color-btn-bg-disabled);
             color: #aaa;
         }
     }
