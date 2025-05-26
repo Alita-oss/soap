@@ -1,15 +1,30 @@
-import {Recipe} from '~/server/models/recipe';
+import status from 'http-status';
+import { Recipe } from '~/server/models/recipe';
+import { handleCatchError } from '~/server/utils/api';
+import { ErrorPrefix, ErrorTypes } from '~/types/error';
 
 export default defineEventHandler(async (event) => {
-    const { name } = await readBody(event);
+    try {
+        const body = await readBody(event);
 
-    const recipe = new Recipe({
-        name,
-    });
+        if (!body.name || !Array.isArray(body.ingredients) || body.ingredients.length === 0) {
+            throw new Error(ErrorTypes[status.PRECONDITION_FAILED]);
+        }
 
-    await recipe.save();
+        const existingRecipe = await Recipe.findOne({
+            name: body.name,
+        });
 
-    return {
-        success: true,
-    };
+        if (existingRecipe) {
+            throw new Error(ErrorTypes[status.CONFLICT]);
+        }
+
+        const newRecipe = await Recipe.create(body);
+        return {
+            newRecipe,
+            statusCode: status.OK,
+        };
+    } catch (err) {
+        handleCatchError(`${ErrorPrefix.API} Error creating new recipe`, err);
+    }
 });

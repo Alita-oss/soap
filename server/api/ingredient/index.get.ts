@@ -1,16 +1,16 @@
 import status from 'http-status';
-import { Recipe } from '~/server/models/recipe';
+import { Ingredient } from '~/server/models/ingredient';
 import { handleCatchError } from '~/server/utils/api';
 import { ErrorPrefix } from '~/types/error';
 
 export default defineEventHandler(async () => {
     try {
-        const recipes = await Recipe.find().populate('ingredients.ingredient');
+        const ingredients = await Ingredient.find();
         return {
-            recipes,
+            ingredients,
             statusCode: status.OK,
         };
     } catch (err) {
-        handleCatchError(`${ErrorPrefix.API} Failed to get all recipes`, err);
+        handleCatchError(`${ErrorPrefix.API} Failed to get all ingredients`, err);
     }
 });
