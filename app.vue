@@ -24,7 +24,7 @@ onMounted(async () => {
         },
     });*/
 
-    const res = await fetch('/api/ingredient/dfx', {
+    /*const res = await fetch('/api/ingredient/dfx', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ onMounted(async () => {
         body: {
             name: 'hej'
         }
-    });
+    });*/
 
     const data = await res.json();
     console.log('Response:', data);

@@ -1,6 +1,6 @@
 import { Recipe } from '~/server/models/recipe';
 import { ErrorPrefix } from '~/types/error';
-import { checkParam } from '~/server/utils/api';
+import { checkParam, handleCatchError } from '~/server/utils/api';
 import status from 'http-status';
 
 export default defineEventHandler(async (event) => {
@@ -17,7 +17,9 @@ export default defineEventHandler(async (event) => {
             }
         }
 
-        const updatedRecipe = await Recipe.findByIdAndUpdate(id, updateData, { new: true });
+        const updatedRecipe = await Recipe.findByIdAndUpdate(id, updateData, { new: true }).populate(
+            'ingredients.ingredient',
+        );
 
         return {
             updatedRecipe,

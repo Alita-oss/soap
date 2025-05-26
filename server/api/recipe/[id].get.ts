@@ -1,13 +1,13 @@
 import { Recipe } from '~/server/models/recipe';
 import { ErrorPrefix } from '~/types/error';
-import { checkParam } from '~/server/utils/api';
+import { checkParam, handleCatchError } from '~/server/utils/api';
 import status from 'http-status';
 
 export default defineEventHandler(async (event) => {
     try {
         const id = checkParam(event, 'id');
 
-        const recipe = await Recipe.findById(id);
+        const recipe = await Recipe.findById(id).populate('ingredients.ingredient');
 
         return {
             recipe,

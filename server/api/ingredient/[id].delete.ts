@@ -1,7 +1,7 @@
-import { Ingredient } from "~/server/models/ingredient";
-import { ErrorPrefix } from "~/types/error";
-import status from "http-status";
-import { checkParam } from "~/server/utils/api";
+import { Ingredient } from '~/server/models/ingredient';
+import { ErrorPrefix } from '~/types/error';
+import status from 'http-status';
+import { checkParam, handleCatchError } from '~/server/utils/api';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -12,8 +12,7 @@ export default defineEventHandler(async (event) => {
         return {
             statusCode: status.OK,
         };
-
     } catch (err) {
         handleCatchError(`${ErrorPrefix.API} Error deleting ingredient`, err);
-    };
+    }
 });

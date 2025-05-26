@@ -1,5 +1,6 @@
 import status from 'http-status';
 import { Ingredient } from '~/server/models/ingredient';
+import { handleCatchError } from '~/server/utils/api';
 import { ErrorPrefix, ErrorTypes } from '~/types/error';
 
 export default defineEventHandler(async (event) => {
@@ -7,7 +8,7 @@ export default defineEventHandler(async (event) => {
         const body = await readBody(event);
 
         if (!body.name || !body.unit || !body.category) {
-            throw new Error('Missing required fields: name, unit or category');
+            throw new Error(ErrorTypes[status.PRECONDITION_FAILED]);
         }
 
         const existingIngredient = await Ingredient.findOne({
@@ -15,7 +16,7 @@ export default defineEventHandler(async (event) => {
         });
 
         if (existingIngredient) {
-            throw new Error(`${ErrorTypes[status.BAD_REQUEST]}: Ingredient with this name already exists`);
+            throw new Error(ErrorTypes[status.CONFLICT]);
         }
 
         const newIngredient = await Ingredient.create(body);

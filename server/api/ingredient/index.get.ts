@@ -1,5 +1,6 @@
 import status from 'http-status';
 import { Ingredient } from '~/server/models/ingredient';
+import { handleCatchError } from '~/server/utils/api';
 import { ErrorPrefix } from '~/types/error';
 
 export default defineEventHandler(async () => {

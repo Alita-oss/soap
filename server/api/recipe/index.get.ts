@@ -1,5 +1,6 @@
 import status from 'http-status';
 import { Recipe } from '~/server/models/recipe';
+import { handleCatchError } from '~/server/utils/api';
 import { ErrorPrefix } from '~/types/error';
 
 export default defineEventHandler(async () => {
