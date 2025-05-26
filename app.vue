@@ -2,7 +2,7 @@
     <div class="layout">
         <p class="hello">Hello</p>
         <h2 class="random">hesixdfgdj</h2>
-        <!-- <div class="test">
+        <!--<div class="test">
             <SInput :error="error">
                 <template #label>
                     <span>Label</span>
@@ -11,7 +11,8 @@
                     <span>Message asldkfj jkdsflk jdklfj dkslj</span>
                 </template>
             </SInput>
-        </div> -->
+            <SButton>Submit</SButton>
+        </div>-->
     </div>
 </template>
 
