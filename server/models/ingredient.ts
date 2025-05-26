@@ -5,6 +5,7 @@ const ingredientSchema = new Schema<IngredientType>({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
     unit: {
         type: String,

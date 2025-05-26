@@ -5,6 +5,7 @@ const recipeSchema = new Schema<RecipeType>({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
     ingredients: [
         {
