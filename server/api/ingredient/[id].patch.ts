@@ -1,6 +1,7 @@
 import { Ingredient } from '~/server/models/ingredient';
 import { ErrorPrefix } from '~/types/error';
 import { checkParam } from '~/server/utils/api';
+import status from 'http-status';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -16,9 +17,12 @@ export default defineEventHandler(async (event) => {
             }
         }
 
-        const updated = await Ingredient.findByIdAndUpdate(id, updateData, { new: true });
+        const updatedIngredient = await Ingredient.findByIdAndUpdate(id, updateData, { new: true });
 
-        return updated;
+        return {
+            updatedIngredient,
+            statusCode: status.OK,
+        };
     } catch (err) {
         handleCatchError(`${ErrorPrefix.API} Error updating ingredient`, err);
     }

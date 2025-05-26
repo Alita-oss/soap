@@ -1,5 +1,6 @@
+import status from 'http-status';
 import { Ingredient } from '~/server/models/ingredient';
-import { ErrorPrefix } from '~/types/error';
+import { ErrorPrefix, ErrorTypes } from '~/types/error';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -14,11 +15,14 @@ export default defineEventHandler(async (event) => {
         });
 
         if (existingIngredient) {
-            throw new Error('Ingredient with this name already exists');
+            throw new Error(`${ErrorTypes[status.BAD_REQUEST]}: Ingredient with this name already exists`);
         }
 
         const newIngredient = await Ingredient.create(body);
-        return newIngredient;
+        return {
+            newIngredient,
+            statusCode: status.OK,
+        };
     } catch (err) {
         handleCatchError(`${ErrorPrefix.API} Error creating new ingredient`, err);
     }

@@ -1,6 +1,7 @@
 import { Recipe } from '~/server/models/recipe';
 import { ErrorPrefix } from '~/types/error';
 import { checkParam } from '~/server/utils/api';
+import status from 'http-status';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -8,11 +9,10 @@ export default defineEventHandler(async (event) => {
 
         const recipe = await Recipe.findById(id);
 
-        if (!recipe) {
-            throw new Error('Recipe not found');
-        }
-
-        return recipe;
+        return {
+            recipe,
+            statusCode: status.OK,
+        };
     } catch (err) {
         handleCatchError(`${ErrorPrefix.API} Failed to get recipe by id`, err);
     }
