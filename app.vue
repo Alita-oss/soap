@@ -1,14 +1,6 @@
 <template>
     <div class="layout">
-        <div>
-            <SInput></SInput>
-            <SSelect v-model="selectedUnit" :options="unitOptions">
-                <template #label>Choose Unit</template>
-            </SSelect>
-            <p>{{ selectedUnit }}</p>
-            <SInput></SInput>
-            <SButton>Submit</SButton>
-        </div>
+        <NuxtPage />
     </div>
 </template>
 
