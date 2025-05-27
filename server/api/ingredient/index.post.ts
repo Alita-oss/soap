@@ -19,9 +19,9 @@ export default defineEventHandler(async (event) => {
             throw new Error(ErrorTypes[status.CONFLICT]);
         }
 
-        const newIngredient = await Ingredient.create(body);
+        const ingredient = await Ingredient.create(body);
         return {
-            newIngredient,
+            ingredient,
             statusCode: status.OK,
         };
     } catch (err) {

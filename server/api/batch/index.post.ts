@@ -19,9 +19,9 @@ export default defineEventHandler(async (event) => {
             throw new Error(ErrorTypes[status.CONFLICT]);
         }
 
-        const newBatch = await Batch.create(body);
+        const batch = await Batch.create(body);
         return {
-            newBatch,
+            batch,
             statusCode: status.OK,
         };
     } catch (err) {
