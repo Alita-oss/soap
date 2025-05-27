@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <!--<div>
+        <div>
             <SInput></SInput>
             <SSelect v-model="selectedUnit" :options="unitOptions">
                 <template #label>Choose Unit</template>
@@ -8,12 +8,12 @@
             <p>{{ selectedUnit }}</p>
             <SInput></SInput>
             <SButton>Submit</SButton>
-        </div>-->
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-/*import SSelect from './components/SSelect.vue';
+import SSelect from './components/SSelect.vue';
 import SInput from './components/SInput.vue';
 import SButton from './components/SButton.vue';
 import type { Unit } from '~/types/unit';
@@ -25,7 +25,7 @@ const unitOptions: { value: Unit; text: string }[] = [
     { value: 'tsp', text: 'teaspoons' },
     { value: 'tbsp', text: 'tablespoons' },
 ];
-const selectedUnit = ref<Unit>('g');*/
+const selectedUnit = ref<Unit>('g');
 
 onMounted(async () => {
     /*const res = await fetch('/api/recipe', {
