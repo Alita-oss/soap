@@ -5,20 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import SSelect from './components/SSelect.vue';
-import SInput from './components/SInput.vue';
-import SButton from './components/SButton.vue';
-import type { Unit } from '~/types/unit';
-
-const unitOptions: { value: Unit; text: string }[] = [
-    { value: 'g', text: 'grams' },
-    { value: 'oz', text: 'ounces' },
-    { value: 'ml', text: 'milliliters' },
-    { value: 'tsp', text: 'teaspoons' },
-    { value: 'tbsp', text: 'tablespoons' },
-];
-const selectedUnit = ref<Unit>('g');
-
 onMounted(async () => {
     /*const res = await fetch('/api/recipe', {
         method: 'GET',

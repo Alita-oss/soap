@@ -18,7 +18,7 @@ const batchSchema = new Schema<BatchType>({
     weightIns: [
         {
             weight: {
-                type: String,
+                type: Number,
                 required: true,
             },
             date: {

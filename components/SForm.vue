@@ -1,11 +1,24 @@
 <template>
     <form class="form" @submit.prevent>
         <slot />
-        <SButton type="submit" @click="$emit('submit')">Submit</SButton>
+        <SButton :disabled="disabled" @click="$emit('cta')">Submit</SButton>
     </form>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+withDefaults(
+    defineProps<{
+        disabled?: boolean;
+    }>(),
+    {
+        disabled: false,
+    },
+);
+
+defineEmits<{
+    (event: 'cta'): void;
+}>();
+</script>
 
 <style scoped lang="scss">
 .form {
