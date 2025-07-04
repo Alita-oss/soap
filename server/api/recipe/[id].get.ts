@@ -1,13 +1,18 @@
 import { Recipe } from '~/server/models/recipe';
-import { ErrorPrefix } from '~/types/error';
+import { ErrorPrefix, ErrorTypes } from '~/types/error';
 import { checkParam, handleCatchError } from '~/server/utils/api';
 import status from 'http-status';
+import { Types } from 'mongoose';
 
 export default defineEventHandler(async (event) => {
     try {
         const id = checkParam(event, 'id');
 
-        const recipe = await Recipe.findById(id).populate('ingredients.ingredient');
+        if (!Types.ObjectId.isValid(id)) {
+            throw new Error(ErrorTypes[status.NOT_FOUND]);
+        }
+
+        const recipe = await Recipe.findById(id).populate({ path: 'ingredients', populate: { path: 'ingredient' } });
 
         return {
             recipe,

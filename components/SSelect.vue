@@ -1,15 +1,10 @@
 <template>
     <label>
-        <span>
+        <span class="s-select__label">
             <slot name="label" />
         </span>
         <div class="s-select__wrapper">
-            <select
-                name="select"
-                class="s-select"
-                :value="modelValue"
-                @input="$emit('update:modelValue', $event.target.value)"
-            >
+            <select v-model="computedValue" name="select" class="s-select">
                 <option v-for="option in options" :key="option.value" :value="option.value">
                     {{ option.text }}
                 </option>
@@ -19,21 +14,34 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-    modelValue: string;
+type InputType = string | number | null;
+
+const props = defineProps<{
+    modelValue: InputType;
     options: { value: string; text: string }[];
 }>();
 
-defineEmits(['update:modelValue']);
+const emit = defineEmits<{
+    (event: 'update:modelValue', value: InputType): void;
+}>();
+
+const computedValue = computed({
+    get: () => props.modelValue,
+    set: (value) => {
+        emit('update:modelValue', value);
+    },
+});
 </script>
 
 <style scoped lang="scss">
 label {
     position: relative;
+
+    @include typography.font(body, s);
 }
 
 .s-select {
-    appearance: none; /* Remove default styling */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     border: solid 1px #000;
@@ -54,6 +62,10 @@ label {
             transform: translate(-50%);
             pointer-events: none;
         }
+    }
+
+    &__label {
+        padding: 0px 25px;
     }
 }
 </style>

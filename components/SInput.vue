@@ -5,7 +5,7 @@
                 <slot name="label" />
             </span>
             <div class="s-input__input">
-                <input :type="inputType" />
+                <input v-model="computedValue" :type="inputType" />
                 <img v-if="error" src="~/assets/icons/error.svg" alt="error" />
             </div>
         </label>
@@ -16,16 +16,29 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
+type InputValue = string | number | Date | null;
+
+const props = withDefaults(
     defineProps<{
-        inputType?: string;
+        inputType?: 'text' | 'number' | 'date';
         error?: boolean;
+        modelValue: InputValue;
     }>(),
     {
         inputType: 'text',
         error: false,
     },
 );
+const emit = defineEmits<{
+    (event: 'update:modelValue', value: InputValue): void;
+}>();
+
+const computedValue = computed({
+    get: () => props.modelValue,
+    set: (value) => {
+        emit('update:modelValue', value);
+    },
+});
 </script>
 
 <style lang="scss" scoped>
